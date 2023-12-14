@@ -1,0 +1,32 @@
+def equation(x):
+    return x**2 - 4
+
+def false_position_method(func, a, b, tol=1e-6, max_iter=100):
+    if func(a) * func(b) > 0:
+        raise ValueError("The provided interval does not bracket the root.")
+
+    root = None
+    iterations = 0
+
+    while iterations < max_iter:
+        c = (a * func(b) - b * func(a)) / (func(b) - func(a))
+        if abs(func(c)) < tol:
+            root = c
+            break
+
+        if func(c) * func(a) < 0:
+            b = c
+        else:
+            a = c
+
+        iterations += 1
+
+    return root, iterations
+
+# Example usage:
+a = 1
+b = 3
+
+root, iterations = false_position_method(equation, a, b)
+print(f"Approximate root: {root}")
+print(f"Iterations: {iterations}")
